@@ -28,7 +28,7 @@ spec:
         livenessProbe:       # Checks if the app is still alive — if it fails repeatedly, the container will be restarted.
           httpGet:
             path: /
-            port: 8080
+            port: 80
           initialDelaySeconds: 10
           periodSeconds: 10
           timeoutSeconds: 2
@@ -36,7 +36,7 @@ spec:
         readinessProbe:     # Checks if the app is ready to receive traffic — if it fails, the pod is removed from the Service endpoints.
           httpGet:
             path: /
-            port: 8080
+            port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
           timeoutSeconds: 2
