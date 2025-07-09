@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apache
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/shiva2980/kind.git
+    targetRevision: master
+    path: apache
+  destination:  
+    server: https://kubernetes.default.svc
+    namespace: apache
+
+  syncPolicy:
+    syncOptions: 
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
