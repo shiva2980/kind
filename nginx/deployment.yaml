@@ -39,7 +39,7 @@ spec:
           failureThreshold: 3
         readinessProbe:     # Checks if the app is ready to receive traffic — if it fails, the pod is removed from the Service endpoints.
           httpGet:  
-            path: /
+            path: /50x.html
             port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
