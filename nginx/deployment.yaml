@@ -26,14 +26,10 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "200m"
-        volumesMounts:  # Mounting the persistent volume claim to the container.
-         - name: my-volume
-           mountPath: /usr/share/nginx/html
-      volumes:  # Defining the volume that will be used by the container.
-      - name: my-volume
-        persistentVolumeClaim:
-          claimName: local-pvc     
-        livenessProbe:    # Checks if the app is still alive — if it fails repeatedly, the container will be restarted.
+        volumeMounts:  # ✅ Corrected spelling
+        - name: my-volume
+          mountPath: /usr/share/nginx/html
+        livenessProbe:
           httpGet:
             path: /
             port: 80
@@ -41,11 +37,15 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 2
           failureThreshold: 3
-        readinessProbe:     # Checks if the app is ready to receive traffic — if it fails, the pod is removed from the Service endpoints.
+        readinessProbe:
           httpGet:  
             path: /
             port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
           timeoutSeconds: 2
-          failureThreshold: 3  
+          failureThreshold: 3
+      volumes:  # ✅ Moved to correct spec level (outside of containers block)
+      - name: my-volume
+        persistentVolumeClaim:
+          claimName: local-pvc
