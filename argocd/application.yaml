@@ -60,7 +60,7 @@ spec:
     path: mysql
   destination:  
     server: https://kubernetes.default.svc
-    namespace: apache
+    namespace: mysql
 
   syncPolicy:
     syncOptions: 
