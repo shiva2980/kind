@@ -48,4 +48,4 @@ spec:
       volumes:  # Defining the persistent volume claim to be used by the pod.
       - name: my-volume 
         persistentVolumeClaim:
-          claimName: my-pvc  # The name of the persistent volume claim to use.          
+          claimName: local-pvc # The name of the persistent volume claim to use.          
