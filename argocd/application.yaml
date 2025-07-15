@@ -49,8 +49,8 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mysql
-  namespace: mysql
+  name: mysql-statefulset
+  namespace: argocd
 spec:
   project: default
 
