@@ -14,6 +14,19 @@ spec:
       labels:
         app: nginx
     spec:
+      initContainers:
+      - name: init-html
+        image: busybox
+        command:
+          - sh
+          - -c
+          - |
+            echo "Welcome to NGINX Home Page" > /usr/share/nginx/html/index.html
+            echo "Custom 50x Error Page" > /usr/share/nginx/html/50x.html
+        volumeMounts:
+        - name: my-volume
+          mountPath: /usr/share/nginx/html
+
       containers:
       - name: nginx
         image: nginx:latest
@@ -22,14 +35,14 @@ spec:
         resources:
           requests:
             memory: "128Mi"
-            cpu: "100m"       
+            cpu: "100m"
           limits:
             memory: "256Mi"
             cpu: "200m"
-        volumeMounts:  # Mounting the persistent volume claim to the container.
-         - name: my-volume
-           mountPath: /usr/share/nginx/html
-        livenessProbe:    # Checks if the app is still alive — if it fails repeatedly, the container will be restarted.
+        volumeMounts:
+        - name: my-volume
+          mountPath: /usr/share/nginx/html
+        livenessProbe:
           httpGet:
             path: /
             port: 80
@@ -37,15 +50,16 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 2
           failureThreshold: 3
-        readinessProbe:     # Checks if the app is ready to receive traffic — if it fails, the pod is removed from the Service endpoints.
-          httpGet:  
-            path: /50x.html
+        readinessProbe:
+          httpGet:
+            path: /
             port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
           timeoutSeconds: 2
-          failureThreshold: 3  
-      volumes:  # Defining the persistent volume claim to be used by the pod.
-      - name: my-volume 
+          failureThreshold: 3
+
+      volumes:
+      - name: my-volume
         persistentVolumeClaim:
-          claimName: local-pvc # The name of the persistent volume claim to use.          
+          claimName: local-pvc
