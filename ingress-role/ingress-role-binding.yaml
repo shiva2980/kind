@@ -43,4 +43,4 @@ rules:
       - ingressclasses
     verbs:
       - get
-      - list
+      - list  
