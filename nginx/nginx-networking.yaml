@@ -16,6 +16,15 @@ spec:
             name: nginx-service
             port:
               number: 82
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apache-ingress
+  namespace: nginx        
+spec:
+  ingressClassName: nginx
+  rules:      
   - host: apache.local
     http:
       paths: 
